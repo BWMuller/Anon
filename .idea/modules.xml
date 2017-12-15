@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Anon.iml" filepath="$PROJECT_DIR$/Anon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anon-annotations/anon-annotations.iml" filepath="$PROJECT_DIR$/anon-annotations/anon-annotations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anon-plugin/anon-plugin.iml" filepath="$PROJECT_DIR$/anon-plugin/anon-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anon-runtime/anon-runtime.iml" filepath="$PROJECT_DIR$/anon-runtime/anon-runtime.iml" />
+    </modules>
+  </component>
+</project>

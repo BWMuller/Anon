@@ -1,0 +1,1 @@
+include ':anon-annotations', ':anon-runtime', ':anon-plugin'
