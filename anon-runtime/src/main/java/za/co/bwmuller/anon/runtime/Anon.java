@@ -47,7 +47,7 @@ public class Anon extends AnonState {
             new Handler(Looper.getMainLooper()).postDelayed(new RuntimeRunnable<Annotation>(anonClass, trackable, execution, signature.getName()) {
                 @Override
                 public void run() {
-                    callback.onTrackable(annotation, name, execution.duration);
+                    callback.onTrackable(anonClass, annotation, name, execution.duration);
                 }
             }, 10);
         }
@@ -67,7 +67,7 @@ public class Anon extends AnonState {
             new Handler(Looper.getMainLooper()).postDelayed(new RuntimeRunnable<AnonMethod>(anonClass, methodTrack, execution, joinPoint.getSignature().getName()) {
                 @Override
                 public void run() {
-                    callback.onMethod(annotation, name, execution.duration);
+                    callback.onMethod(anonClass, annotation, name, execution.duration);
                 }
             }, 10);
         }

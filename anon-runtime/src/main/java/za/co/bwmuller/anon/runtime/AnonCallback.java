@@ -10,7 +10,7 @@ import za.co.bwmuller.anon.annotations.AnonClass;
  */
 
 public interface AnonCallback {
-    void onMethod(AnonMethod methodTrack, String methodName, long executionDuration);
+    void onMethod(AnonClass anonClass, AnonMethod methodTrack, String methodName, long executionDuration);
 
-    void onTrackable(Annotation trackable, String methodName, long executionDuration);
+    void onTrackable(AnonClass anonClass, Annotation trackable, String methodName, long executionDuration);
 }

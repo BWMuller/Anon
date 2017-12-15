@@ -6,7 +6,7 @@ This library was based of JakeWarton's Hugo library https://github.com/JakeWhart
 
 # Usage
 Include this in your app
-implementation 'za.co.bwmuller.anon:anon-runtime:1.0.0-SNAPSHOT'
+implementation 'za.co.bwmuller.anon:anon-runtime:0.0.1'
 
 Add @AnonClass to any class that required trackable methods.
 Add @AnonMethod to any method within such a class in order to receive a callback when the method has finished.
