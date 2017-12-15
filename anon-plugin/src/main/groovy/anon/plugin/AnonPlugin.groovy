@@ -26,7 +26,7 @@ class AnonPlugin implements Plugin<Project> {
     }
 
     project.dependencies {
-      implementation 'za.co.bwmuller.anon:anon-annotations:1.0.0-SNAPSHOT'
+//      implementation 'za.co.bwmuller.anon:anon-annotations:1.0.0-SNAPSHOT'
     }
 
     project.extensions.create('anon', AnonExtension)
