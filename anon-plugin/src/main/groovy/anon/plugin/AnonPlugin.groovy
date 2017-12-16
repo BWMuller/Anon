@@ -26,8 +26,8 @@ class AnonPlugin implements Plugin<Project> {
     }
 
     project.dependencies {
-      implementation project(':anon-runtime')
-      implementation project(':anon-annotations')
+      implementation 'com.github.BWMuller.Anon:anon-runtime:6209e0e'
+      implementation 'com.github.BWMuller.Anon:anon-annotations:6209e0e'
     }
 
     project.extensions.create('anon', AnonExtension)
