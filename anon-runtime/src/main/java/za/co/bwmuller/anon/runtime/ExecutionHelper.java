@@ -1,8 +1,10 @@
 package za.co.bwmuller.anon.runtime;
 
 import android.os.Build;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Trace;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.aspectj.lang.JoinPoint;
@@ -13,24 +15,14 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import java.util.concurrent.TimeUnit;
 
+import za.co.bwmuller.anon.annotations.AnonClass;
+
 /**
  * Created by Bernhard Müller on 13/12/2017.
  */
 
 class ExecutionHelper {
-
-    public static ExecutionResult execute(ProceedingJoinPoint joinPoint, boolean logInstance) throws Throwable {
-        enterMethod(joinPoint, logInstance);
-
-        long startNanos = System.nanoTime();
-        Object result = joinPoint.proceed();
-        long endNanos = System.nanoTime();
-        ExecutionResult execution = new ExecutionResult(result, TimeUnit.NANOSECONDS.toMillis(endNanos - startNanos));
-
-        exitMethod(joinPoint, logInstance, execution.result, execution.duration);
-
-        return execution;
-    }
+    private static final String TAG = "ANON";
 
     private static void enterMethod(JoinPoint joinPoint, boolean enabled) {
         if (!enabled) return;
@@ -57,7 +49,7 @@ class ExecutionHelper {
             builder.append(" [Thread:\"").append(Thread.currentThread().getName()).append("\"]");
         }
 
-        Log.v(asTag(cls), builder.toString());
+        Log.v(TAG, asTag(cls) + ": " + builder.toString());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             final String section = builder.toString().substring(2);
@@ -90,7 +82,7 @@ class ExecutionHelper {
             builder.append(result == null ? "null" : result.toString());
         }
 
-        Log.v(asTag(cls), builder.toString());
+        Log.v(TAG, asTag(cls) + ": " + builder.toString());
     }
 
     private static String asTag(Class<?> cls) {
@@ -100,8 +92,42 @@ class ExecutionHelper {
         return cls.getSimpleName();
     }
 
+    static ExecutionResult execute(ProceedingJoinPoint joinPoint, boolean logInstance) throws Throwable {
+        enterMethod(joinPoint, logInstance);
 
-    public static class ExecutionResult {
+        long startNanos = System.nanoTime();
+        Object result = joinPoint.proceed();
+        long endNanos = System.nanoTime();
+        ExecutionResult execution = new ExecutionResult(result, TimeUnit.NANOSECONDS.toMillis(endNanos - startNanos));
+
+        exitMethod(joinPoint, logInstance, execution.result, execution.duration);
+
+        return execution;
+    }
+
+    static void tryPostDelayed(RuntimeRunnable runtimeRunnable) {
+        try {
+            new Handler(Looper.getMainLooper()).postDelayed(runtimeRunnable, 10);
+        } catch (Throwable ex) {
+            Log.w(TAG, "Error notifying of event", ex);
+        }
+    }
+
+    static boolean isClassEnabled(@Nullable AnonClass anonClass) {
+        return anonClass != null && anonClass.enable();
+    }
+
+    @Nullable
+    static AnonClass getAnnotatedClassAnon(@Nullable Class<?> clazz) {
+        try {
+            return clazz == null ? null : clazz.getAnnotation(AnonClass.class);
+        } catch (Throwable ex) {
+            Log.w(TAG, "Get annotated class failed", ex);
+        }
+        return null;
+    }
+
+    static class ExecutionResult {
         long duration;
         Object result;
 

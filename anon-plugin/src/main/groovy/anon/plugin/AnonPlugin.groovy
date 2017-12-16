@@ -26,7 +26,8 @@ class AnonPlugin implements Plugin<Project> {
     }
 
     project.dependencies {
-//      implementation 'za.co.bwmuller.anon:anon-annotations:1.0.0-SNAPSHOT'
+      implementation 'za.co.bwmuller.anon:anon-runtime:0.0.2'
+      implementation 'za.co.bwmuller.anon:anon-annotations:0.0.2'
     }
 
     project.extensions.create('anon', AnonExtension)
@@ -43,13 +44,13 @@ class AnonPlugin implements Plugin<Project> {
       JavaCompile javaCompile = variant.javaCompile
       javaCompile.doLast {
         String[] args = [
-            "-showWeaveInfo",
-            "-1.5",
-            "-inpath", javaCompile.destinationDir.toString(),
-            "-aspectpath", javaCompile.classpath.asPath,
-            "-d", javaCompile.destinationDir.toString(),
-            "-classpath", javaCompile.classpath.asPath,
-            "-bootclasspath", project.android.bootClasspath.join(File.pathSeparator)
+                "-showWeaveInfo",
+                "-1.5",
+                "-inpath", javaCompile.destinationDir.toString(),
+                "-aspectpath", javaCompile.classpath.asPath,
+                "-d", javaCompile.destinationDir.toString(),
+                "-classpath", javaCompile.classpath.asPath,
+                "-bootclasspath", project.android.bootClasspath.join(File.pathSeparator)
         ]
         log.debug "ajc args: " + Arrays.toString(args)
 

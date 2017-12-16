@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AnonClass {
+    String value();
     boolean enable() default true;
-    String name() default "";
 }

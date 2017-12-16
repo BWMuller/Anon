@@ -34,4 +34,5 @@ allprojects {
 ext {
     compileSdkVersion = 26
     buildToolsVersion = '27.0.1'
+    supportLibVersion = "27.0.2"
 }
