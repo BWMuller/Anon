@@ -70,7 +70,7 @@ public class Anon extends AnonState {
         AnonClass anonClass = ExecutionHelper.getAnnotatedClassAnon(joinPoint.getThis().getClass());
         ExecutionHelper.ExecutionResult execution = ExecutionHelper.execute(joinPoint, enabled && traceLogging && ExecutionHelper.isClassEnabled(anonClass));
         try {
-            if (enabled && callback != null) {//&& isClassEnabled(anonClass)
+            if (enabled && callback != null && ExecutionHelper.isClassEnabled(anonClass)) {
                 ExecutionHelper.tryPostDelayed(new RuntimeRunnable<AnonMethod>(anonClass, methodTrack, execution, joinPoint.getSignature().getName()) {
                     @Override
                     public void run() {
